@@ -1,13 +1,17 @@
 type Currencies = {
     usa: "usd";
-    china: "cny";
+    china?: "cny";
     ukraine: "uah";
-    kz: "tenge";
+    readonly kz: "tenge";
 };
 
 // Generic который будет заниматься модификацией типов
 type CreateCustomCurr<T> = {
-    [P in keyof T]: string;
+    // значение только для чтения (readonly)
+    // - и тернарный оператор (?) для удаление модификатор
+    -readonly [P in keyof T]-?: string;
+    // + и тернарный оператор (?) для добавление модификаторов
+    // +readonly [P in keyof T]+?: string;
 };
 
 // Создаем копию Currencies (где каждое значение(property) является string)
